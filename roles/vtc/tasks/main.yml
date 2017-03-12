@@ -1,0 +1,66 @@
+---
+# tasks file for vtc
+
+- name: CHECK PLATFORM IS x86_64
+  assert:
+    that:
+      - "ansible_architecture == 'x86_64'"
+    msg: "System is not x86_64"
+
+- name: CHECK IF PLATFORM IS FEDORA-BASED VER 7
+  set_fact:
+    installer: "yum"
+    install_list: "redhat-lsb"
+    flavor: "7"
+  when: (ansible_distribution == "RedHat" or ansible_distribution == "CentOS") and
+        (ansible_distribution_major_version == "7")
+    
+- name: IF PLATFORM NOT FEDORA-BASED VER 7, THEN SKIP
+  assert:
+    that:
+      - "flavor != 'none'"
+    msg: "{{ ansible_distribution }} {{ ansible_distribution_version }} is not supported"
+         
+- name: BUILD DEPENDENCIES LIST
+  set_fact:
+    dependencies: "{{ install_list }},qemu-kvm,libvirt,libvirt-python,python-virtinst,virt-manager,virt-viewer"
+
+#- name: CHECK REDHAT REGISTRATION
+#  redhat_subscription:
+#    username: "{{ rhn_user }}"
+#    password: "{{ rhn_pass }}"
+#    state: present
+#    autosubscribe: true
+#  when: ansible_distribution == "RedHat"
+    
+#- name: INSTALL DEPENDENCIES VIA YUM
+#  yum: 
+#    name: "{{ dependencies }}"
+#    state: present
+#  when: installer == "yum"
+
+- name: MAKE DIR FOR VTC FILES
+  shell: mkdir ansible-vtc
+
+#- name: COPY VTC QCOW2
+#  copy:
+#    src: vtc.qcow2
+#    dest: "{{ vtc_qcow2_remote_location }}"
+    
+- name: COPY VTC XML FILE
+  template:
+    src: vtc.j2
+    dest: "{{ vtc_xml_remote_location }}"
+
+- name: COPY VTC CONFIG TXT FILE
+  template:
+    src: config.j2
+    dest: "{{ vtc_config_txt_remote_location }}"
+    
+- name: MAKE ISO FROM CONFIG TXT
+  shell: cd ansible-vtc && mkisofs -o config.iso config.txt
+
+- name: DEPLOY VTC
+  shell: cd ansible-vtc && virsh create vtc.xml
+
+

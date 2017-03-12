@@ -1,0 +1,5 @@
+---
+- name: DEPLOY VTS
+  hosts: rhel-host
+  roles: 
+    - role: vtc

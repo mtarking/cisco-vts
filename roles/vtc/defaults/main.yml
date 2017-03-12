@@ -1,0 +1,26 @@
+---
+# defaults file for vtc
+
+ansible_connection: ssh
+ansible_ssh_user: root
+ansible_ssh_pass: c1sco123
+
+rhn_user: mtarking
+rhn_pass: cisco.123
+
+vtc_hostname: mt-vtc
+ipv4_mgmt_ip: 10.2.2.100
+ipv4_mgmt_mask: 255.255.255.0
+ipv4_mgmt_gw: 10.2.2.1
+ipv4_dns: 10.2.2.68
+fqdn: ecatsrtp.cisco.com
+ipv4_ntp: 10.2.2.69
+vts_admin_pwd: Cisco123#
+admin_user: admin
+admin_user_pwd: Cisco123#
+
+vtc_xml_remote_location: /root/ansible-vtc/vtc.xml
+#vtc_qcow2_remote_location: /root/ansible-vtc/vtc.qcow2
+vtc_qcow2_remote_location: /var/lib/libvirt/images/vtc2.3/mt-vtc.qcow2
+vtc_config_txt_remote_location: /root/ansible-vtc/config.txt
+vtc_config_iso_remote_location: /root/ansible-vtc/config.iso

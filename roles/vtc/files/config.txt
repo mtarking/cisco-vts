@@ -1,0 +1,15 @@
+Hostname=vtc
+ManagementIPv4Method=Static
+ManagementIPv4Address=1.1.1.2
+ManagementIPv4Netmask=255.255.255.0
+ManagementIPv4Gateway=1.1.1.1
+UnderlayIPv4Method=Static
+UnderlayIPv4Address=2.2.2.2
+UnderlayIPv4Netmask=255.255.255.0
+UnderlayIPv4Gateway=2.2.2.1
+DNSv4=3.3.3.3
+Domain=cisco.com
+NTPv4=1.1.1.1
+vts-adminPassword=cisco123
+AdministrativeUser=admin
+AdministrativePassword=cisco123
