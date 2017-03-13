@@ -39,13 +39,18 @@
 #    state: present
 #  when: installer == "yum"
 
-- name: MAKE DIR FOR VTC FILES
-  shell: mkdir ansible-vtc
+#- name: MAKE DIR FOR VTC FILES
+#  shell: mkdir ansible-vtc
 
-#- name: COPY VTC QCOW2
-#  copy:
-#    src: vtc.qcow2
-#    dest: "{{ vtc_qcow2_remote_location }}"
+- name: MAKE VTC WORKING DIR
+  file:
+    path: /root/ansible-vtc
+    state: directory
+
+- name: COPY VTC QCOW2
+  copy:
+    src: vtc.qcow2
+    dest: "{{ vtc_qcow2_remote_location }}"
     
 - name: COPY VTC XML FILE
   template:
